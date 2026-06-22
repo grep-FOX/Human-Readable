@@ -4,6 +4,8 @@ description: "A quick intro to building static sites with Astro and Content Coll
 pubDate: 2024-01-15
 featured: true
 tags: ["astro", "static-site", "web"]
+
+cover: ./hero.png
 ---
 
 Welcome to your first post! This is a test post to show how your blog works.

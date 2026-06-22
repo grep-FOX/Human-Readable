@@ -7,10 +7,19 @@ interface Props {
     description: string;
     pubDate: Date;
     tags?: string[];
+
+    cover?: {
+      src: string;
+    };
   };
 }
-
 const { frontmatter } = Astro.props;
+
+const ogImage = frontmatter.cover
+  ? new URL(frontmatter.cover.src, Astro.site).href
+  : undefined;
+
+
 const pubDate = new Date(frontmatter.pubDate).toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'short',
@@ -18,7 +27,7 @@ const pubDate = new Date(frontmatter.pubDate).toLocaleDateString('en-US', {
 });
 ---
 
-<Layout title={frontmatter.title} description={frontmatter.description}>
+<Layout title={frontmatter.title} description={frontmatter.description} ogImage={ogImage}>
   <article class="post">
     <div class="container">
       <header class="post-header">
