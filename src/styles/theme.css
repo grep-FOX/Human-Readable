@@ -2,7 +2,7 @@
 :root {
   /* Core palette */
   --color-bg: #1a1b26;
-  --color-surface: #192734;
+  --color-surface: /* #192734; */ #24283b;
   --color-surface-light: #23314f;
   --color-primary: #7aa2f7;
   --color-primary-bright: #bb9af7;
@@ -55,8 +55,15 @@ html[dir="rtl"] pre,
 html[dir="rtl"] code {
   direction: ltr;
   text-align: left;
+
 }
 
+html .site-header {
+  direction: ltr;
+  text-align: left;
+  font-family: system-ui, sans-serif;
+
+}
 
 
 
@@ -78,6 +85,22 @@ html[dir="rtl"] h5,
 html[dir="rtl"] h6 {
   font-family: "Vazirmatn", system-ui, sans-serif;
 }
+
+
+
+
+
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* keeps it above other content */
+  background: var(--color-surface); /* prevents content showing through */
+}
+
+
+
+
 
 
 /* Typography */
