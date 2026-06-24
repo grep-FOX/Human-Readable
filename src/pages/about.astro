@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getImage } from 'astro:assets';
 
 // Dynamically import all images from the slideshow directory
 const images = import.meta.glob<{ default: ImageMetadata }>(
@@ -12,23 +11,15 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 const slideImages = Object.values(images)
   .map(module => module.default)
   .sort();
+
+// Pick a random image
+const randomImage = slideImages[Math.floor(Math.random() * slideImages.length)];
+const backgroundImageUrl = randomImage?.src || '';
 ---
 
 <Layout title="About — human readable">
-  <!-- Blurred Background Image Slideshow -->
-  <div class="bg-slideshow">
-    <div class="slideshow-container">
-      {slideImages.map((image, index) => (
-        <div 
-          class="slide" 
-          style={`
-            background-image: url('${image.src}');
-            animation-delay: ${(index * (16 / slideImages.length))}s;
-          `}
-        ></div>
-      ))}
-    </div>
-  </div>
+  <!-- Random Background Image -->
+  <div class="bg-image" style={`background-image: url('${backgroundImageUrl}');`}></div>
 
   <div class="container">
     <!-- Hero Section -->
@@ -106,7 +97,7 @@ const slideImages = Object.values(images)
           <article class="about-card">
             <h2>elsewhere</h2>
             <p class="elsewhere-text">
-              you can find me on <a href="https://github.com" target="_blank">github</a>, <a href="https://linkedin.com" target="_blank">linkedin</a>, and <a href="https://telegram.org" target="_blank">telegram</a>. always interested in talking about code, systems, or cs topics.
+              you can find me on <a href="https://github.com/cs-astronaut" target="_blank">github</a>, <a href="https://www.linkedin.com/in/amin-farahani-8a6511263/" target="_blank">linkedin</a>, and <a href="https://t.me/Astro_Terminal" target="_blank">telegram</a>. always interested in talking about code, systems, or cs topics.
             </p>
           </article>
         </div>
@@ -116,52 +107,27 @@ const slideImages = Object.values(images)
 </Layout>
 
 <style>
-  /* Background Image Slideshow */
-  .bg-slideshow {
+  .bg-image {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -1;
-    overflow: hidden;
-  }
-
-  .slideshow-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-bg);
-  }
-
-  .slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    filter: blur(8px) brightness(0.6);
-    animation: slideshow 16s infinite;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    will-change: opacity;
-    /* transform: translateZ(0); */
+    filter: blur(8px) brightness(0.6);
   }
 
-  @keyframes slideshow {
-    0% {
-      opacity: 0;
-    }
-    15% {
-      opacity: 1;
-    }
-    85% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
+/* .bg-image::after { */
+/*   content: ''; */
+/*   position: absolute; */
+/*   inset: 0; */
+/*   background: radial-gradient(circle, rgba(26, 27, 38, 0.3), rgba(26, 27, 38, 0.7)); */
+/*   pointer-events: none; */
+/* } */
+
 
   .container {
     position: relative;
@@ -343,8 +309,8 @@ const slideImages = Object.values(images)
       font-size: 1.1rem;
     }
 
-    .slide {
-      filter: blur(8px) brightness(0.6);
+    .bg-image {
+      filter: blur(30px) brightness(0.6);
     }
   }
 </style>
