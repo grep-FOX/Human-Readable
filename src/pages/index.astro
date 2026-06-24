@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import PostCard from '../components/PostCard.astro';
 import { Image } from "astro:assets";
+import '../styles/theme.css';
 
 // Fetch all blog posts
 const allPosts = await getCollection('blog');
@@ -26,9 +27,9 @@ const getSlug = (post: any) => post.id.split('/').pop()?.replace(/\.md$/, '') ||
   <div class="container">
     <!-- Hero Section -->
     <section class="hero">
-      <h1 class="hero-title">human readable</h1>
+      <h1 class="hero-title">Human Readable</h1>
       <p class="hero-subtitle">
-        a retro-arcade blog about code, systems, and the stuff in between
+        manual pages for curious humans!
       </p>
       <div class="hero-divider"></div>
     </section>
@@ -151,6 +152,7 @@ const getSlug = (post: any) => post.id.split('/').pop()?.replace(/\.md$/, '') ||
   }
 
   .hero-title {
+    font-family: "Workbench", monospace;
     font-size: 3.5rem;
     margin-bottom: 1rem;
     letter-spacing: 3px;

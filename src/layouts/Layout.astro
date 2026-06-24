@@ -89,7 +89,7 @@ const { title, description, ogImage, lang = "en", dir = "ltr" } = Astro.props;
           <nav class="site-nav">
             <a href={import.meta.env.BASE_URL} class="site-title">
               <span class="bracket">[</span>
-              <span class="title-text">human readable</span>
+              <span class="title-text">-h</span>
               <span class="bracket">]</span>
             </a>
             <ul class="nav-links">
@@ -148,14 +148,16 @@ const { title, description, ogImage, lang = "en", dir = "ltr" } = Astro.props;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 1.2rem;
-      font-weight: 600;
+      font-size: 1.7rem;
+      font-weight: 100;
       letter-spacing: 2px;
       text-decoration: none;
       color: var(--color-primary);
       transition: all 0.3s ease;
       flex-shrink: 0;
       text-transform: lowercase;
+      text-decoration: none;
+
     }
 
     .site-title:hover {
@@ -165,12 +167,14 @@ const { title, description, ogImage, lang = "en", dir = "ltr" } = Astro.props;
 
     .title-text {
       text-transform: lowercase;
+      font-family: "Workbench";
     }
 
     .bracket {
       color: var(--color-accent-warm);
-      font-weight: 700;
+      font-weight: 900;
       opacity: 0.8;
+      font-family: "Workbench";
     }
 
     .nav-links {
@@ -230,7 +234,7 @@ const { title, description, ogImage, lang = "en", dir = "ltr" } = Astro.props;
       }
 
       .site-title {
-        font-size: 1rem;
+        font-size: 1.3rem;
       }
 
       .nav-links {
@@ -251,7 +255,7 @@ const { title, description, ogImage, lang = "en", dir = "ltr" } = Astro.props;
 
       .site-nav {
         gap: 1rem;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
       }
 
       .site-title {
@@ -261,7 +265,6 @@ const { title, description, ogImage, lang = "en", dir = "ltr" } = Astro.props;
 
       .nav-links {
         width: 100%;
-        justify-content: flex-start;
         gap: 0.2rem;
         order: 3;
       }

@@ -28,6 +28,11 @@ html {
   scroll-behavior: smooth;
 }
 
+@font-face {
+  font-family: "Workbench";
+  src: url("../assets/fonts/Workbench.woff2") format("woff2");
+  font-display: swap;
+}
 
 html {
   font-family: system-ui, sans-serif;
@@ -136,7 +141,6 @@ p {
 a {
   color: var(--color-primary);
   text-decoration: none;
-  border-bottom: 1px dotted var(--color-primary);
   transition: all 0.2s ease;
 }
 
