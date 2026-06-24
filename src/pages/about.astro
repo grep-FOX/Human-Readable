@@ -1,0 +1,350 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getImage } from 'astro:assets';
+
+// Dynamically import all images from the slideshow directory
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/slideshow/*.{jpg,jpeg,png,webp}',
+  { eager: true }
+);
+
+// Extract the actual image objects and sort them
+const slideImages = Object.values(images)
+  .map(module => module.default)
+  .sort();
+---
+
+<Layout title="About — human readable">
+  <!-- Blurred Background Image Slideshow -->
+  <div class="bg-slideshow">
+    <div class="slideshow-container">
+      {slideImages.map((image, index) => (
+        <div 
+          class="slide" 
+          style={`
+            background-image: url('${image.src}');
+            animation-delay: ${(index * (16 / slideImages.length))}s;
+          `}
+        ></div>
+      ))}
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1 class="page-title">about me</h1>
+      <div class="hero-divider"></div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-section">
+      <div class="about-grid">
+        <div class="about-main">
+          <article class="about-card">
+            <h2>who i am</h2>
+            <p>
+              i'm a computer science student building things at the intersection of systems, machine learning, and clean code. this blog is where i document what i learn along the way.
+            </p>
+          </article>
+
+          <article class="about-card">
+            <h2>what i do</h2>
+            <ul class="interests-list">
+              <li>machine learning & computer vision</li>
+              <li>systems programming & compilers</li>
+              <li>building minimal, functional tools</li>
+              <li>exploring low-level kernel internals</li>
+              <li>web development with a focus on performance</li>
+            </ul>
+          </article>
+
+          <article class="about-card">
+            <h2>tech i use</h2>
+            <div class="tech-grid">
+              <div class="tech-item">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">PyTorch</span>
+                <span class="tech-tag">OpenCV</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-tag">Rust</span>
+                <span class="tech-tag">C</span>
+                <span class="tech-tag">Bash</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-tag">Astro</span>
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">FastAPI</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-tag">Linux</span>
+                <span class="tech-tag">Arch</span>
+                <span class="tech-tag">Docker</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="about-card">
+            <h2>current projects</h2>
+            <ul class="projects-list">
+              <li>
+                <strong>Few-shot Object Counting</strong>
+                <span class="project-desc">capstone project exploring LOCA and SAFECount for counting objects from minimal examples</span>
+              </li>
+              <li>
+                <strong>human readable</strong>
+                <span class="project-desc">this blog — a minimal static site with retro-arcade vibes</span>
+              </li>
+              <li>
+                <strong>Compiler & Systems Work</strong>
+                <span class="project-desc">exploring register allocation, optimization, and kernel internals</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="about-card">
+            <h2>elsewhere</h2>
+            <p class="elsewhere-text">
+              you can find me on <a href="https://github.com" target="_blank">github</a>, <a href="https://linkedin.com" target="_blank">linkedin</a>, and <a href="https://telegram.org" target="_blank">telegram</a>. always interested in talking about code, systems, or cs topics.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  /* Background Image Slideshow */
+  .bg-slideshow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .slideshow-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg);
+  }
+
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    filter: blur(8px) brightness(0.6);
+    animation: slideshow 16s infinite;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    will-change: opacity;
+    /* transform: translateZ(0); */
+  }
+
+  @keyframes slideshow {
+    0% {
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
+    85% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    text-transform: lowercase;
+    text-align: center;
+  }
+
+  .hero {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-top: 1rem;
+  }
+
+  .hero-divider {
+    height: 2px;
+    max-width: 200px;
+    margin: 2rem auto;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-primary),
+      transparent
+    );
+  }
+
+  .about-section {
+    margin-bottom: 4rem;
+  }
+
+  .about-grid {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .about-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .about-card {
+    padding: 2rem;
+    border: 1px solid var(--color-surface-light);
+    border-radius: 2px;
+    background-color: rgba(26, 27, 38, 0.85);
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+  }
+
+  .about-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--glow-primary);
+    background-color: rgba(26, 27, 38, 0.95);
+  }
+
+  .about-card h2 {
+    color: var(--color-primary);
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+  }
+
+  .about-card p {
+    color: var(--color-text-dim);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .interests-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--color-text-dim);
+  }
+
+  .interests-list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .interests-list li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent-warm);
+  }
+
+  .tech-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .tech-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .tech-tag {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background-color: rgba(122, 162, 247, 0.1);
+    border: 1px solid var(--color-accent-warm);
+    border-radius: 2px;
+    color: var(--color-accent-warm);
+    font-size: 0.85rem;
+    font-family: 'Courier New', monospace;
+  }
+
+  .projects-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--color-text-dim);
+  }
+
+  .projects-list li {
+    padding: 1rem 0;
+    border-bottom: 1px dotted var(--color-surface-light);
+  }
+
+  .projects-list li:last-child {
+    border-bottom: none;
+  }
+
+  .projects-list strong {
+    color: var(--color-primary);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .project-desc {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-text-dim);
+    margin-top: 0.25rem;
+  }
+
+  .elsewhere-text {
+    color: var(--color-text-dim);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .elsewhere-text a {
+    color: var(--color-accent-warm);
+    border-bottom: 1px dotted var(--color-accent-warm);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .elsewhere-text a:hover {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+  }
+
+  @media (max-width: 640px) {
+    .page-title {
+      font-size: 2rem;
+    }
+
+    .about-card {
+      padding: 1.5rem;
+    }
+
+    .about-card h2 {
+      font-size: 1.1rem;
+    }
+
+    .slide {
+      filter: blur(8px) brightness(0.6);
+    }
+  }
+</style>
