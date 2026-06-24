@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import PostCard from '../components/PostCard.astro';
+import { Image } from "astro:assets";
 
 // Fetch all blog posts
 const allPosts = await getCollection('blog');
@@ -68,11 +69,15 @@ const getSlug = (post: any) => post.id.split('/').pop()?.replace(/\.md$/, '') ||
       </div>
 
       {featuredPost.data.cover && (
-        <img
-          class="card-bg"
-          src={featuredPost.data.cover.src}
+        <Image
+          src={featuredPost.data.cover}
           alt=""
-        />
+          class="card-bg"
+          loading="eager"
+          widths={[400, 800]}
+          formats={["webp"]}
+          loading="eager"
+         />
       )}
     </article>
   </section>
@@ -87,11 +92,15 @@ const getSlug = (post: any) => post.id.split('/').pop()?.replace(/\.md$/, '') ||
             {recentPosts.map((post) => (
               <article class="post-card">
               {post.data.cover && (
-                  <img
-                    class="card-bg"
-                    src={post.data.cover.src}
+                  <Image
+                    src={post.data.cover}
                     alt=""
+                    class="card-bg"
+                    widths={[400, 800]}
+                    formats={["webp"]}
+                    loading="eager"
                   />
+
                 )}
 
 
