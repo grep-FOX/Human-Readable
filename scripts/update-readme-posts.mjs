@@ -34,12 +34,20 @@ function escapeRegex(s) {
 const readme = fs.readFileSync(readmePath, "utf8");
 const posts = getPosts();
 
-const sectionMatch = readme.match(/(## Posts[\s\S]*?)(\n##\s+|\n#\s+|$)/);
-if (!sectionMatch) {
+const postsHeadingIndex = readme.indexOf("## Posts");
+if (postsHeadingIndex === -1) {
   throw new Error('Could not find "## Posts" section in README.md');
 }
 
-const section = sectionMatch[1];
+// Find the next heading or end of file
+const nextHeadingMatch = readme.slice(postsHeadingIndex + 9).match(/\n(#{1,2}\s+)/);
+const sectionEndIndex = nextHeadingMatch
+  ? postsHeadingIndex + 9 + nextHeadingMatch.index
+  : readme.length;
+
+const section = readme.slice(postsHeadingIndex, sectionEndIndex).trim();
+const nextHeading = nextHeadingMatch ? nextHeadingMatch[1] : "";
+
 const existingRows = [...section.matchAll(/^\|\s*\d+\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$/gm)]
   .map((m) => ({
     name: m[1].trim(),
@@ -92,12 +100,14 @@ for (let i = 0; i < newPostsWithDates.length; i++) {
 }
 
 const updatedTable = [
+  "## Posts",
+  "",
   tableLines[0],
   tableLines[1] || "| --- | --- | --- |",
   ...dataLines,
 ].join("\n");
 
-const updatedReadme = readme.replace(section, `${updatedTable}\n`);
+const updatedReadme = readme.slice(0, postsHeadingIndex) + updatedTable + "\n" + (nextHeading ? "\n" + nextHeading : "") + readme.slice(sectionEndIndex + nextHeading.length);
 fs.writeFileSync(readmePath, updatedReadme);
 
 console.log(`Added ${newPostsWithDates.length} new post(s) to README.md (sorted by commit date)`);
