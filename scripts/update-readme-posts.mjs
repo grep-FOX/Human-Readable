@@ -18,34 +18,49 @@ function getCommitDate(relPath) {
     return "unknown";
   }
 }
-
 function getCommitAuthor(relPath) {
   try {
-    // Get author name and email
-    const out = execFileSync(
+    const name = execFileSync(
       "git",
-      ["log", "-1", "--format=%an|%ae", "--", relPath],
+      ["log", "-1", "--format=%an", "--", relPath],
       { encoding: "utf8" }
     ).trim();
-    
-    if (!out) return { name: "unknown", username: "unknown" };
-    
-    const [name, email] = out.split("|");
-    
-    // Try to extract GitHub username from email (email format: username@users.noreply.github.com)
-    let username = "unknown";
-    if (email && email.includes("@")) {
-      const emailUsername = email.split("@")[0];
-      // Check if it's a GitHub noreply email
-      if (email.includes("users.noreply.github.com")) {
-        username = emailUsername;
-      } else {
-        // Fallback: use part before @ as username
-        username = emailUsername;
+
+    // Get commit SHA for this post
+    const sha = execFileSync(
+      "git",
+      ["log", "-1", "--format=%H", "--", relPath],
+      { encoding: "utf8" }
+    ).trim();
+
+    if (!sha) {
+      return { name: name || "unknown", username: "unknown" };
+    }
+
+    // If running inside GitHub Actions and gh is available,
+    // fetch the actual GitHub username from the commit API.
+    if (process.env.GITHUB_REPOSITORY) {
+      try {
+        const response = execFileSync(
+          "gh",
+          [
+            "api",
+            `repos/${process.env.GITHUB_REPOSITORY}/commits/${sha}`,
+            "--jq",
+            ".author.login"
+          ],
+          { encoding: "utf8" }
+        ).trim();
+
+        if (response) {
+          return { name: name || response, username: response };
+        }
+      } catch {
+        // Fall back below
       }
     }
-    
-    return { name: name || "unknown", username };
+
+    return { name: name || "unknown", username: "unknown" };
   } catch {
     return { name: "unknown", username: "unknown" };
   }
