@@ -13,9 +13,11 @@
 </div>
 
 
+
+
 A minimal, retro-arcade themed blog for computer science, AI and technology posts. Built with [Astro 6](https://astro.build) 🧑‍🚀 and deployed to GitHub Pages.
 
----
+
 ## Posts
 
 ![Last Commit](https://img.shields.io/github/last-commit/CS-Astronaut/human-readable)
