@@ -91,7 +91,7 @@ const sectionEndIndex = nextHeadingMatch
 const section = readme.slice(postsHeadingIndex, sectionEndIndex).trim();
 const nextHeading = nextHeadingMatch ? nextHeadingMatch[1] : "";
 
-const existingRows = [...section.matchAll(/^\|\s*\d+\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$/gm)]
+const existingRows = [...section.matchAll(/^\|\s*\d+\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$/gm)]
   .map((m) => {
     const postCell = m[1].trim();
     // Extract folder name from markdown link [name](url) or plain text
@@ -162,7 +162,7 @@ const updatedTable = [
   "## Posts",
   "",
   tableLines[0],
-  tableLines[1] || "| --- | --- | --- |",
+  tableLines[1] || "| --- | --- | --- | --- |",
   ...dataLines,
 ].join("\n");
 
