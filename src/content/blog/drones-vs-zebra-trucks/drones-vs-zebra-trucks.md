@@ -1,6 +1,6 @@
 ---
 title: Drone vs Zebra
-description: "Zebra Trucks: Computer Vision Story"
+description: "Zebra Trucks: a Computer Vision Story"
 pubDate: 2026-06-28
 featured: false
 tags:
@@ -14,7 +14,7 @@ lang: fa
 ![camouflaged-truck](hero.png)
 
 فرض کنید به عنوان مسئول استتار کامیون مهمات لجیستیک میاید و کامیون رو به شکل راه راه رنگ میزنید تا از دست پهپاد های اوکراینی در امان بمونید. اما چرا اینکار رو میکنید؟
-
+### لینک خبر:
 > [RFE/RL – Zebra Trucks: Why Russia Is Using 'Dazzle Camouflage' In Ukraine](https://www.rferl.org/a/zebra-dazzle-camouflage-ai-hornet-drones-russia-ukraine-invasion/33771856.html)
 
 در جنگ های `Modern Warfare` امروزی AI نقش چشم گیری رو ایفا میکنه و به دنبال اون توانایی مقابله با سلاح های به اصطلاح `AI-Integrated` بیش از پیش اهمیت پیدا کرده. برای اینکه ببینیم که چطوری این خطوط موازی به استتار این کامیون روس کمک میکنن باید اول به چند تا کانسپت `Computer Vision` یا بینایی ماشین سر بزنیم.
@@ -91,7 +91,9 @@ lang: fa
 <br>
 <br>
 <br>
- 
+
+### مقالات و رفرنس ها
+
 >- [ImageNet-trained CNNs are biased towards texture; increasing shape bias improves accuracy and robustness](https://arxiv.org/abs/1811.12231)
 > 
 > - [A Survey of Camouflaged Object Detection and Beyond](https://arxiv.org/abs/2408.14562)
@@ -103,5 +105,4 @@ lang: fa
 > - [Computer Vision: Algorithms and Applications (Richard Szeliski)](https://szeliski.org/Book/)
 > 
 > - [Deep Learning Book (Goodfellow, Bengio, Courville)](https://www.deeplearningbook.org/)
-
 
