@@ -1,0 +1,71 @@
+---
+import "./CRTBio.css";
+import { commands } from "./commands.js";
+---
+
+
+<div class="crt-terminal">
+
+    <pre id="terminal"></pre>
+
+</div>
+
+
+<script define:vars={{ commands }}>
+    const SPEED = 22;
+    const PAUSE = 600;
+
+    const terminal = document.getElementById("terminal");
+
+    let html = "";
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function type(text) {
+        for (const c of text) {
+            html += c;
+            terminal.innerHTML = html;
+            terminal.scrollTop = terminal.scrollHeight;
+            await sleep(SPEED);
+        }
+    }
+
+    async function line(text = "") {
+        html += text + "\n";
+        terminal.innerHTML = html;
+        terminal.scrollTop = terminal.scrollHeight;
+    }
+    async function run() {
+        for (const item of commands) {
+
+            await type(`amin@arch:~$ ${item.command}`);
+            await line();
+
+            await sleep(PAUSE);
+
+            if (Array.isArray(item.output)) {
+
+                for (const l of item.output) {
+                    await line(l);
+                    await sleep(120);
+                }
+
+            } else {
+
+                await line(item.output);
+
+            }
+
+            await line();
+            await sleep(PAUSE);
+        }
+
+        html += 'amin@arch:~$ <span class="cursor"></span>';
+        terminal.innerHTML = html;
+        terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    run();
+</script>

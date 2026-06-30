@@ -40,6 +40,7 @@ const { title, description, ogImage, lang = "en", dir = "ltr" } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=VT323&display=swap" rel="stylesheet">
 
 
     <!-- Open Graph -->
@@ -115,6 +116,27 @@ const { title, description, ogImage, lang = "en", dir = "ltr" } = Astro.props;
   </html>
 
   <style>
+
+    /* Layout.astro */
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1 0 auto; /* fills remaining space, no overshoot */
+    }
+
+
+
+
+
+
     .site-header {
       position: sticky;
       top: 0;
@@ -224,9 +246,9 @@ const { title, description, ogImage, lang = "en", dir = "ltr" } = Astro.props;
       width: 100%;
     }
 
-    main {
-      min-height: calc(100vh - 300px);
-    }
+    /* main { */
+    /*   min-height: calc(100vh - 300px); */
+    /* } */
 
     @media (max-width: 768px) {
       .site-nav {
@@ -274,4 +296,9 @@ const { title, description, ogImage, lang = "en", dir = "ltr" } = Astro.props;
         font-size: 0.8rem;
       }
     }
+
+
+
+
+
   </style>
